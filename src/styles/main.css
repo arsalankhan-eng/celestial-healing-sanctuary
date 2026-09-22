@@ -2692,3 +2692,323 @@ img, svg, video, canvas {
     bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
   }
 }
+
+
+/* =========================================================
+   SOOTHING SPIRITUAL AURA BREATHING ANIMATION
+   ========================================================= */
+@keyframes aura-prana-breathe {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+}
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: min(720px, 92vw);
+  height: min(720px, 92vw);
+  background: radial-gradient(circle, rgba(147, 51, 234, 0.24) 0%, rgba(212, 175, 55, 0.14) 45%, transparent 70%);
+  pointer-events: none;
+  filter: blur(45px);
+  border-radius: 50%;
+  animation: aura-prana-breathe 14s infinite ease-in-out;
+  z-index: 0;
+}
+
+.portal-spotlight-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-spotlight-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  width: min(500px, 80vw);
+  height: min(500px, 80vw);
+  background: radial-gradient(circle, rgba(126, 34, 206, 0.2) 0%, rgba(212, 175, 55, 0.08) 50%, transparent 70%);
+  pointer-events: none;
+  filter: blur(55px);
+  border-radius: 50%;
+  animation: aura-prana-breathe 16s infinite ease-in-out 3s;
+  z-index: 0;
+}
+
+
+/* =========================================================
+   REALISTIC BURNING ALTAR CANDLES & LIVING FLAMES
+   ========================================================= */
+
+.site-brand-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex: 2;
+}
+
+/* Altar Candle Structure */
+.sacred-altar-candle {
+  position: relative;
+  width: 14px;
+  height: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Wax Candle Column */
+.candle-wax-body {
+  width: 12px;
+  height: 28px;
+  background: linear-gradient(180deg, #fdf6e2 0%, #d8ca9f 20%, #2a2218 85%, #18120d 100%);
+  border-radius: 3px 3px 1px 1px;
+  position: relative;
+  box-shadow: inset -2px 0 3px rgba(0, 0, 0, 0.4), inset 2px 0 3px rgba(255, 255, 255, 0.2), 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.wax-drip {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 3px;
+  height: 8px;
+  background: #fdf6e2;
+  border-radius: 0 0 3px 3px;
+  opacity: 0.85;
+}
+
+/* Wick */
+.candle-wick {
+  width: 2px;
+  height: 6px;
+  background: #111;
+  position: relative;
+  z-index: 2;
+  margin-bottom: -1px;
+  border-radius: 1px;
+}
+
+.candle-wick::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 3px;
+  background: #ff5722;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ff9800;
+}
+
+/* Realistic Multi-Layer Flickering Flame */
+.candle-flame {
+  position: relative;
+  width: 10px;
+  height: 18px;
+  background: linear-gradient(180deg, #ffffff 0%, #ffeb3b 25%, #ff9800 65%, rgba(255, 87, 34, 0.9) 100%);
+  border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+  transform-origin: 50% 90%;
+  animation: candle-flicker 2.2s infinite ease-in-out;
+  box-shadow: 0 0 14px 2px rgba(255, 179, 0, 0.85), 0 0 28px 6px rgba(255, 109, 0, 0.45);
+  z-index: 3;
+}
+
+.flame-inner {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: #ffffff;
+  border-radius: 50% 50% 35% 35%;
+  opacity: 0.9;
+  filter: blur(0.5px);
+}
+
+/* Dynamic Ambient Candlelight Aura Glow */
+.candle-glow {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.35) 0%, rgba(255, 143, 0, 0.15) 45%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glow-pulse 1.8s infinite ease-in-out alternate;
+  z-index: 1;
+}
+
+/* Delicate Rising Candle Smoke */
+.candle-smoke {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 16px;
+  background: linear-gradient(180deg, transparent 0%, rgba(230, 220, 240, 0.25) 50%, rgba(255, 200, 100, 0.3) 100%);
+  filter: blur(1.5px);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: smoke-rise 3.2s infinite ease-in-out;
+  opacity: 0.6;
+}
+
+/* Candle Flame Animations */
+@keyframes candle-flicker {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  15% {
+    transform: scale(1.06, 0.94) rotate(-2deg);
+  }
+  30% {
+    transform: scale(0.95, 1.08) rotate(3deg);
+  }
+  45% {
+    transform: scale(1.04, 0.98) rotate(-1deg);
+  }
+  60% {
+    transform: scale(0.98, 1.03) rotate(2deg);
+  }
+  75% {
+    transform: scale(1.02, 0.96) rotate(-2deg);
+  }
+  90% {
+    transform: scale(0.97, 1.04) rotate(1deg);
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    transform: translateX(-50%) scale(0.92);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.15);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.02);
+    opacity: 0.7;
+  }
+}
+
+@keyframes smoke-rise {
+  0% {
+    transform: translateX(-50%) translateY(4px) scaleX(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(-35%) translateY(-10px) scaleX(1.4);
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateX(-65%) translateY(-22px) scaleX(2);
+    opacity: 0;
+  }
+}
+
+/* Golden Moon Phase Bar */
+.moon-phases-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 2px;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+
+.moon-glyph {
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 0 2px rgba(212, 175, 55, 0.4));
+}
+
+.moon-glyph.full-moon {
+  transform: scale(1.25);
+  filter: drop-shadow(0 0 8px rgba(255, 235, 160, 0.85));
+  animation: moon-shine 4s infinite ease-in-out;
+}
+
+@keyframes moon-shine {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(255, 235, 160, 0.6)); }
+  50% { filter: drop-shadow(0 0 12px rgba(255, 235, 160, 1)); transform: scale(1.35); }
+}
+
+/* Hero Altar Living Flame Overlay */
+.hero-altar-candle-flame {
+  position: absolute;
+  top: 22%;
+  left: 24.5%;
+  width: 24px;
+  height: 36px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.altar-flame-core {
+  width: 14px;
+  height: 26px;
+  background: linear-gradient(180deg, #ffffff 0%, #ffea00 30%, #ff9100 70%, rgba(255, 61, 0, 0.95) 100%);
+  border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+  animation: candle-flicker 1.9s infinite ease-in-out;
+  box-shadow: 0 0 20px 4px rgba(255, 193, 7, 0.95), 0 0 45px 12px rgba(255, 111, 0, 0.5);
+  transform-origin: 50% 90%;
+}
+
+.altar-flame-glow {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 65px;
+  height: 65px;
+  background: radial-gradient(circle, rgba(255, 204, 0, 0.45) 0%, rgba(255, 109, 0, 0.2) 40%, transparent 70%);
+  border-radius: 50%;
+  animation: glow-pulse 1.6s infinite ease-in-out alternate;
+}
+
+.altar-smoke-drift {
+  position: absolute;
+  top: -30px;
+  left: 5px;
+  width: 8px;
+  height: 35px;
+  background: linear-gradient(180deg, transparent 0%, rgba(220, 210, 240, 0.3) 60%, rgba(255, 180, 50, 0.4) 100%);
+  filter: blur(2.5px);
+  border-radius: 50%;
+  animation: smoke-rise 3.8s infinite ease-in-out;
+}
+
+@media (max-width: 900px) {
+  .hero-altar-candle-flame {
+    display: none; /* Hide hero image hotspot on small screens where altar scales differently */
+  }
+}
+
+@media (max-width: 600px) {
+  .sacred-altar-candle {
+    display: none; /* Hide header side candles on ultra-compact mobile to give room to title */
+  }
+}
