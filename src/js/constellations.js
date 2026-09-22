@@ -1,4 +1,4 @@
-// Interactive Constellation & Starlight Background Canvas
+// Interactive Constellation & Starlight Background Canvas (Mobile & Touch Optimized)
 export function initConstellations() {
   const canvas = document.getElementById("celestial-canvas");
   if (!canvas) return;
@@ -7,40 +7,65 @@ export function initConstellations() {
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
 
-  let mouse = { x: null, y: null, radius: 140 };
+  let pointer = { x: null, y: null, radius: 130 };
 
+  let lastWidth = width;
   window.addEventListener("resize", () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-    createStars();
+    // Only recreate stars if actual width changed significantly (avoids mobile address bar scroll jumps)
+    if (Math.abs(window.innerWidth - lastWidth) > 30) {
+      lastWidth = width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      createStars();
+    } else {
+      height = canvas.height = window.innerHeight;
+    }
   });
 
+  // Mouse & Touch Support
   window.addEventListener("mousemove", (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+    pointer.x = e.clientX;
+    pointer.y = e.clientY;
   });
 
   window.addEventListener("mouseleave", () => {
-    mouse.x = null;
-    mouse.y = null;
+    pointer.x = null;
+    pointer.y = null;
+  });
+
+  window.addEventListener("touchstart", (e) => {
+    if (e.touches.length > 0) {
+      pointer.x = e.touches[0].clientX;
+      pointer.y = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener("touchmove", (e) => {
+    if (e.touches.length > 0) {
+      pointer.x = e.touches[0].clientX;
+      pointer.y = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener("touchend", () => {
+    pointer.x = null;
+    pointer.y = null;
   });
 
   let stars = [];
-  const count = Math.floor((width * height) / 10000);
+  const starCount = Math.min(100, Math.max(35, Math.floor((width * height) / 12000)));
 
   function createStars() {
     stars = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        radius: Math.random() * 1.6 + 0.4,
-        baseAlpha: Math.random() * 0.6 + 0.2,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: Math.random() * 1.5 + 0.5,
         alpha: Math.random() * 0.6 + 0.2,
-        twinkleSpeed: Math.random() * 0.02 + 0.005,
-        isGolden: Math.random() < 0.18
+        twinkleSpeed: Math.random() * 0.015 + 0.005,
+        isGolden: Math.random() < 0.2
       });
     }
   }
@@ -50,7 +75,6 @@ export function initConstellations() {
   function draw() {
     ctx.clearRect(0, 0, width, height);
 
-    // Draw stars
     for (let i = 0; i < stars.length; i++) {
       const s = stars[i];
 
@@ -63,7 +87,7 @@ export function initConstellations() {
       if (s.y > height) s.y = 0;
 
       s.alpha += s.twinkleSpeed;
-      if (s.alpha > 0.9 || s.alpha < 0.2) {
+      if (s.alpha > 0.85 || s.alpha < 0.2) {
         s.twinkleSpeed = -s.twinkleSpeed;
       }
 
@@ -74,29 +98,29 @@ export function initConstellations() {
         : `rgba(240, 235, 255, ${Math.max(0.1, s.alpha * 0.75)})`;
       ctx.fill();
 
-      // Connect stars near mouse
-      if (mouse.x !== null) {
-        const dx = mouse.x - s.x;
-        const dy = mouse.y - s.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
+      // Connect stars near pointer (mouse or finger touch)
+      if (pointer.x !== null) {
+        const dx = pointer.x - s.x;
+        const dy = pointer.y - s.y;
+        const dist = Math.hypot(dx, dy);
 
-        if (dist < mouse.radius) {
-          const lineAlpha = (1 - dist / mouse.radius) * 0.45;
+        if (dist < pointer.radius) {
+          const lineAlpha = (1 - dist / pointer.radius) * 0.4;
           ctx.beginPath();
           ctx.moveTo(s.x, s.y);
-          ctx.lineTo(mouse.x, mouse.y);
+          ctx.lineTo(pointer.x, pointer.y);
           ctx.strokeStyle = `rgba(212, 175, 55, ${lineAlpha})`;
-          ctx.lineWidth = 0.65;
+          ctx.lineWidth = 0.6;
           ctx.stroke();
         }
       }
 
-      // Constellation inter-connections
+      // Inter-constellation connections
       for (let j = i + 1; j < stars.length; j++) {
         const s2 = stars[j];
         const dist2 = Math.hypot(s.x - s2.x, s.y - s2.y);
-        if (dist2 < 75) {
-          const lineAlpha = (1 - dist2 / 75) * 0.12;
+        if (dist2 < 70) {
+          const lineAlpha = (1 - dist2 / 70) * 0.1;
           ctx.beginPath();
           ctx.moveTo(s.x, s.y);
           ctx.lineTo(s2.x, s2.y);

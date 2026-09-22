@@ -35,16 +35,23 @@
   --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* RESET & GLOBAL STYLES */
+/* RESET & GLOBAL STYLES (WORLD-CLASS RESPONSIVE ARCHITECTURE) */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  min-width: 0; /* Prevents flex and grid items from blowing out containers during zoom */
 }
 
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -53,9 +60,21 @@ body {
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.65;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   letter-spacing: 0.015em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fluid, zoom-safe images and media */
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* BACKGROUND CONSTELLATION CANVAS */
@@ -1416,47 +1435,53 @@ body {
    INTERACTIVE BOOKING & PAYMENT CHECKOUT MODAL
    ========================================================= */
 .mystic-modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(4, 3, 7, 0.85);
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 3, 7, 0.88);
   backdrop-filter: blur(14px);
-  z-index: 1000;
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .mystic-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  width: 92%;
-  max-width: 860px;
-  max-height: 90vh;
+  position: relative;
+  width: min(860px, 94vw);
+  max-height: min(90dvh, 880px);
+  max-height: min(90vh, 880px);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: #0e0c15;
   border: 1px solid var(--border-gold-bright);
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(212, 175, 55, 0.2);
   z-index: 1001;
-  display: none;
+  padding: clamp(20px, 4vw, 36px);
+  margin: auto;
+}
+
+#booking-checkout-modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: env(safe-area-inset-top, 16px) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 16px) env(safe-area-inset-left, 16px);
+  pointer-events: none;
   opacity: 0;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 35px 40px;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-#booking-checkout-modal.open .mystic-modal-backdrop,
-#booking-checkout-modal.open .mystic-modal {
-  display: block;
+#booking-checkout-modal.open {
+  pointer-events: auto;
   opacity: 1;
+  visibility: visible;
 }
 
 #booking-checkout-modal.open .mystic-modal {
-  transform: translate(-50%, -50%) scale(1);
+  transform: none;
 }
 
 .modal-header-bar {
@@ -2514,5 +2539,76 @@ body {
     font-size: 0.6rem;
     letter-spacing: 0.1em;
     padding: 6px 10px;
+  }
+}
+
+
+/* =========================================================
+   ULTIMATE MOBILE & TABLET ZOOM & VIEWPORT SAFEGUARDS
+   ========================================================= */
+
+/* Prevent iOS Safari from auto-zooming into inputs */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Fluid responsive typography with break-word safety */
+.hero-title, .section-title, .brand-title, .portal-session-title {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Safe touch target heights (Apple HIG 44px standard) */
+.mystic-btn-primary,
+.mystic-btn-secondary,
+.slot-btn,
+.scheduler-date-card,
+.filter-pill,
+.healing-selector-btn,
+.pay-tab {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* Smooth native swipe on date strip */
+.scheduler-date-strip {
+  display: flex !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  gap: 10px !important;
+  padding: 4px 2px 14px !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: thin;
+}
+
+.scheduler-date-card {
+  flex: 0 0 clamp(72px, 14vw, 84px) !important;
+  scroll-snap-align: start !important;
+}
+
+/* Fullscreen smooth mobile cart drawer */
+@media screen and (max-width: 768px) {
+  .cart-drawer {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  
+  .floating-audio-bar {
+    width: calc(100% - 32px) !important;
+    left: 16px !important;
+    transform: none !important;
+    bottom: -100px;
+  }
+  .floating-audio-bar.active {
+    bottom: max(16px, env(safe-area-inset-bottom, 16px)) !important;
   }
 }
