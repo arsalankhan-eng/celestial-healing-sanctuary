@@ -22,34 +22,52 @@
   </div>
 
   <!-- Header Navigation -->
+    <!-- Header Navigation (Luxury 2-Tier Layout Matching Reference Image) -->
   <header id="main-header" class="site-header">
-    <div class="container header-inner">
-      <div class="header-left">
-        <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle Navigation">☰</button>
-        <nav id="main-nav" class="main-nav">
-          <a href="#hero" class="active">Sanctuary</a>
-          <a href="#readings">Readings</a>
-          <a href="#healing-session">1:1 Healing</a>
-          <a href="#digital-offerings">Digital Goods</a>
-          <a href="#client-words">Reviews</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-      </div>
+    <div class="container">
+      <div class="header-top-row">
+        <div class="header-top-left">
+          <button id="mobile-menu-toggle" class="mobile-toggle" aria-label="Toggle Navigation">
+            <span class="hamburger-icon">☰</span>
+            <span class="menu-text">MENU</span>
+          </button>
+          <span class="header-tagline-desktop">✧ SACRED HEALING SANCTUARY ✧</span>
+        </div>
 
-      <a href="#hero" class="site-brand">
-        <span class="brand-title">MYSTICAL MAGICAL</span>
-        <span class="brand-sub">CELESTIAL HEALING SANCTUARY</span>
-      </a>
-
-      <div class="header-right">
-        <a href="#healing-session" class="mystic-btn-secondary" style="padding: 8px 16px; font-size: 0.72rem;">
-          Book 1:1
+        <a href="#hero" class="site-brand">
+          <span class="brand-title">MYSTICAL MAGICAL</span>
+          <span class="brand-sub">CELESTIAL HEALING SANCTUARY</span>
         </a>
-        <button type="button" class="header-action-btn open-cart-trigger" aria-label="Sacred Cart">
-          <span>🛍️</span>
-          <span class="cart-count-badge">0</span>
-        </button>
+
+        <div class="header-top-right">
+          <a href="#healing-session" class="header-book-btn mystic-btn-secondary" style="padding: 8px 16px; font-size: 0.72rem;">
+            Book 1:1
+          </a>
+          <button type="button" class="header-action-btn open-cart-trigger" aria-label="Sacred Cart">
+            <span>🛍️</span>
+            <span class="cart-count-badge">0</span>
+          </button>
+        </div>
       </div>
+
+      <!-- Dedicated Desktop & Mobile Slide-Out Nav -->
+      <nav id="main-nav" class="desktop-nav-row">
+        <div class="mobile-nav-header">
+          <span class="mobile-nav-title">✧ CELESTIA SANCTUARY ✧</span>
+          <button type="button" id="close-mobile-nav" class="mobile-nav-close" aria-label="Close Navigation">✕</button>
+        </div>
+        <a href="#hero" class="active">Sanctuary</a>
+        <a href="#readings">Reading Packages</a>
+        <a href="#healing-session">1:1 Healing Session</a>
+        <a href="#digital-offerings">Digital Goods</a>
+        <a href="#client-words">Client Reviews</a>
+        <a href="#faq">Sacred FAQ</a>
+        <div class="mobile-nav-footer">
+          <a href="#healing-session" class="mystic-btn-primary mystic-glow-btn" style="width: 100%; text-align: center;">
+            Reserve 1:1 Session →
+          </a>
+        </div>
+      </nav>
     </div>
   </header>
 

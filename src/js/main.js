@@ -314,6 +314,10 @@ function initHeaderAndScroll() {
 
   // Mobile menu toggle
   const mobileToggle = document.getElementById("mobile-menu-toggle");
+  const closeBtn = document.getElementById("close-mobile-nav");
+  closeBtn?.addEventListener("click", () => {
+    navMenu?.classList.remove("open");
+  });
   const navMenu = document.getElementById("main-nav");
   mobileToggle?.addEventListener("click", () => {
     navMenu?.classList.toggle("open");
